@@ -1,0 +1,45 @@
+
+services:
+  gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    environment:
+      - JWT_SECRET=bPEHaBRhLSDiuqNhotFCqfmuLsdyfRdxYWGyaTDQCqtVQ
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-service
+      - order-service
+      - payment-service
+    networks:
+      - micro-net
+    restart: unless-stopped
+
+  auth-service:
+    build: ./services/auth-service
+    container_name: auth-service
+    networks:
+      - micro-net
+    restart: unless-stopped
+
+  order-service:
+    build: ./services/order-service
+    container_name: order-service
+    environment:
+      - JWT_SECRET=bPEHaBRhLSDiuqNhotFCqfmuLsdyfRdxYWGyaTDQCqtVQ
+    networks:
+      - micro-net
+    restart: unless-stopped
+
+  payment-service:
+    build: ./services/payment-service
+    container_name: payment-service
+    networks:
+      - micro-net
+    restart: unless-stopped
+
+
+
+networks:
+  micro-net:
+    driver: bridge
