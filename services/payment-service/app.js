@@ -5,7 +5,7 @@ let payments=[];
 app.post("/",async(req,res)=>{
     const payment={
         id:Date.now(),
-        userId:req.headers['x-user-username'],
+        userId:req.user.email,
         amount:req.body.amount,
         status:"PAID"
     }

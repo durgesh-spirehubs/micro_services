@@ -21,7 +21,8 @@ function authMiddleware(req,res,next){
     try {
         const decodedToken = jwt.verify(token,process.env.JWT_SECRET);
         req.user = decodedToken;
-        req.headers['x-user-username'] = decodedToken.username;
+        if (decodedToken.email) req.headers['x-user-email'] = decodedToken.email;
+        if (decodedToken.id) req.headers['x-user-id'] = decodedToken.id;
         next();
     } catch (error) {
         return res.status(401).send({message:"Unauthorized"})

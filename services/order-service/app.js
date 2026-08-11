@@ -25,8 +25,8 @@ app.get("/me", async(req, res) => {
 
 app.post("/",async(req,res)=>{
     const order={
-        id:Date.now(),
-        userId:req.user.username,
+        id:req.user.id,
+        userId:req.user.email,
         status:"CREATED"
     }
     orders.push(order)
