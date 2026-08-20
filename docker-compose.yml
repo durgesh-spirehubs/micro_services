@@ -18,6 +18,8 @@ services:
   auth-service:
     build: ./services/auth-service
     container_name: auth-service
+    environment:
+      - JWT_SECRET=bPEHaBRhLSDiuqNhotFCqfmuLsdyfRdxYWGyaTDQCqtVQ
     networks:
       - micro-net
     restart: unless-stopped
@@ -34,11 +36,20 @@ services:
   payment-service:
     build: ./services/payment-service
     container_name: payment-service
+    environment:
+      - JWT_SECRET=bPEHaBRhLSDiuqNhotFCqfmuLsdyfRdxYWGyaTDQCqtVQ
     networks:
       - micro-net
     restart: unless-stopped
 
-
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - micro-net
+    restart: unless-stopped
 
 networks:
   micro-net:
